@@ -8,5 +8,7 @@ import com.hcjava.pojo.User;
  */
 public interface UserDao {
 
-	User findByName(String name);
+	User findByName(String name);//µÇÂ¼¼ì²é
+	
+	void save(User user);//×¢²á
 }

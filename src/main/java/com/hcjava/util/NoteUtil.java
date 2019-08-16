@@ -18,19 +18,15 @@ public class NoteUtil {
 		return uuid.toString().replace("-", "");
 	}
 
-	public static String md5(String src) {
-		try {
+	public static String md5(String src) throws Exception {
 			MessageDigest md = MessageDigest.getInstance("MD5");
 			byte[] digest = md.digest(src.getBytes());
 			// 将MD5处理结果利用base64转成字符串
 			String string = Base64.encode(digest);
 			return string;
-		} catch (Exception e) {
-			throw new NoteException("密码加密异常", e);
-		}
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		System.out.println(createUUID());
 		System.out.println(md5("123456"));
 	}

@@ -3,8 +3,13 @@
  "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 
 <mapper namespace="com.hcjava.dao.UserDao">
+	<!-- 登录 -->
 	<select id="findByName" parameterType="string" resultType="com.hcjava.pojo.User">
 		select cn_user_id,cn_user_name,cn_user_password,cn_user_token,cn_user_nick 
 		from cn_user where cn_user_name = #{name}
 	</select>
+	<!-- 注册 -->
+	<insert id="save" parameterType="com.hcjava.pojo.User">
+		insert into cn_user values(#{cn_user_id},#{cn_user_name},#{cn_user_password},null,#{cn_user_nick})
+	</insert>
 </mapper>

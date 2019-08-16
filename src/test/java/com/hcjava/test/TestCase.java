@@ -17,4 +17,5 @@ public class TestCase {
 		User user = bean.findByName("zhouj");
 		System.out.println(user.getCn_user_password());
 	}
+	
 }
