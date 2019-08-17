@@ -70,7 +70,7 @@
 							<div class="contact-body">
 								<ul id="book_ul" class="contacts-list">
 									<!-- 动态生成笔记本列表li -->
-								<!-- 	<li class="online">
+									<!-- <li class="online">
 									<a  class='checked'>
 									<i class="fa fa-book" title="online" rel="tooltip-bottom">
 									</i> 默认笔记本</a></li> -->
@@ -297,7 +297,13 @@
 		<script type="text/javascript" src="scripts/note.js"></script>
 		<script type="text/javascript" src="scripts/alert.js"></script>
 		<script type="text/javascript">
-		
+		//edit.html页面加载完毕执行的方法
+		$(function() {
+			//执行加载笔记本的方法
+			loadUserBooks();
+			//加载笔记的方法
+			
+		});
 		</script>
 		<!-- Bootstrap框架JS -->
         <script src="scripts/bootstrap.min.js"></script>

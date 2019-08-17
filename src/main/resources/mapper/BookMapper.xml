@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.hcjava.dao.BookDao">
+	<!-- 加载笔记本列表 -->
+	<select id="findByUserId" parameterType="string"
+		resultType="com.hcjava.pojo.Book">
+		select
+		cn_notebook_id,cn_user_id,cn_notebook_type_id,cn_notebook_name,cn_notebook_desc,cn_notebook_createtime
+		from cn_notebook where cn_user_id = #{uid}
+	</select>
+</mapper>

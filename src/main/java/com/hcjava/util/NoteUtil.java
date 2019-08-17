@@ -3,7 +3,7 @@ package com.hcjava.util;
 import java.security.MessageDigest;
 import java.util.UUID;
 
-import com.sun.org.apache.xml.internal.security.utils.Base64;
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
 /**
  * 1.Éú³ÉUUID 2.ÃÜÂë¼ÓÃÜ
