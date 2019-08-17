@@ -302,7 +302,8 @@
 			//执行加载笔记本的方法
 			loadUserBooks();
 			//加载笔记的方法
-			
+			//$("#book_ul li").click(loadNote);
+			$("#book_ul").on("click","li",loadNote);
 		});
 		</script>
 		<!-- Bootstrap框架JS -->

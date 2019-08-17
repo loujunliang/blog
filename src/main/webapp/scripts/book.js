@@ -1,5 +1,4 @@
-
-// 加载用户笔记
+// 加载用户笔记本
 function loadUserBooks() {
 	// 获取用户id
 	var uid = getCookie("uid");
@@ -28,8 +27,8 @@ function loadUserBooks() {
 					//循环创建li列表元素
 					createBookLi(bookName,bookId);
 				}
+				//$("#book_ul li").click(loadNote);
 			}
-			
 		},
 		error:function(){
 			alert("加载笔记本列表异常");
