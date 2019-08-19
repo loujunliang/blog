@@ -10,4 +10,6 @@
 		cn_notebook_id,cn_user_id,cn_notebook_type_id,cn_notebook_name,cn_notebook_desc,cn_notebook_createtime
 		from cn_notebook where cn_user_id = #{uid}
 	</select>
+	<!-- 添加笔记本 -->
+	<insert id=""></insert>
 </mapper>

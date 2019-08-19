@@ -27,7 +27,7 @@ function loadUserBooks() {
 					//循环创建li列表元素
 					createBookLi(bookName,bookId);
 				}
-				//$("#book_ul li").click(loadNote);
+				//$("#book_ul li").click(loadNotes);
 			}
 		},
 		error:function(){

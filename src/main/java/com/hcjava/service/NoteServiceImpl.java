@@ -25,4 +25,28 @@ public class NoteServiceImpl implements NoteService {
 		return result;
 	}
 
+	public NoteResult loadNote(String noteId) {
+		NoteResult result = new NoteResult();
+		Note note = noteDao.findByNoteId(noteId);
+		result.setStatus(0);
+		result.setMsg("查询笔记内容完成");
+		result.setData(note);
+		return result;
+	}
+
+	public NoteResult update(Note note) {
+		NoteResult result = new NoteResult();
+		note.setCn_note_last_modify_time(System.currentTimeMillis());
+		int i = noteDao.update(note);
+		if (i == 1) {
+			result.setStatus(0);
+			result.setMsg("保存笔记成功");
+			return result;
+		} else {
+			result.setStatus(1);
+			result.setMsg("保存内容失败");
+			return result;
+		}
+	}
+
 }
