@@ -37,4 +37,11 @@ public class NoteController {
 		NoteResult result = noteService.update(note);
 		return result;
 	}
+	
+	@RequestMapping("/add.do")
+	@ResponseBody
+	public NoteResult add(Note note) {
+		NoteResult result = noteService.save(note);
+		return result;
+	}
 }

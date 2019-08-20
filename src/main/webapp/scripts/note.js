@@ -84,14 +84,14 @@ function updateNote() {
 	// 获取前台参数
 	var title = $("#input_note_title").val().trim();
 	var body = um.getContent();
-	//获取选中的笔记li元素
+	// 获取选中的笔记li元素
 	var $li = $("#note_ul a.checked").parent();
 	var noteId = $li.data("noteId");
 	// 检测参数格式
 	var ok = true;
-	if(noteId == null){
+	if (noteId == null) {
 		alert("请选择要保存的笔记");
-	}else if (title == "") {
+	} else if (title == "") {
 		ok = false;
 		$("#note_title_span").html("<font color='red'>标题不能为空</font>");
 	}
@@ -108,15 +108,15 @@ function updateNote() {
 			dataType : "json",
 			success : function(result) {
 				if (result.status == 0) {// 修改成功
-					//<i class="fa fa-file-text-o" title="online" rel="tooltip-bottom"></i> 使用Java操作符<button type="button" class="btn btn-default btn-xs btn_position btn_slide_down"><i class="fa fa-chevron-down"></i></button>
-					//更新列表li中标题
+					// 更新列表li中标题
 					var sli = "";
-					sli += '<i class="fa fa-file-text-o" title="online" rel="tooltip-bottom"></i>'+title+'<button type="button" class="btn btn-default btn-xs btn_position btn_slide_down"><i class="fa fa-chevron-down"></i></button>';
-					//将选中的li元素a内容替换
+					sli += '<i class="fa fa-file-text-o" title="online" rel="tooltip-bottom"></i>'
+					+ title
+					+ '<button type="button" class="btn btn-default btn-xs btn_position btn_slide_down"><i class="fa fa-chevron-down"></i></button>';
+					// 将选中的li元素a内容替换
 					$li.find("a").html(sli);
-					//提示成功
+					// 提示成功
 					alert(result.msg);
-					
 				} else if (result.status == 1) {// 保存失败
 					$("#note_title_span").html(result.msg);
 				}
@@ -126,4 +126,47 @@ function updateNote() {
 			}
 		});
 	}
+}
+
+// 添加笔记
+function addNote() {
+	// 获取参数
+	var noteTitle = $("#input_note").val().trim();
+	var $li = $("#book_ul a.checked").parent();
+	var bookId = $li.data("bookId");
+	var userId = getCookie("uid");
+	// 检测参数格式
+	if (noteTitle == "") {
+		$("#note_span").html("笔记标题不能为空");
+	} else {
+		// 发送Ajax
+		$.ajax({
+			url : base_path + "/note/add.do",
+			type : "post",
+			data : {
+				"cn_notebook_id" : bookId,
+				"cn_note_title" : noteTitle,
+				"cn_user_id":userId
+			},
+			dataType : "json",
+			success : function(result) {
+				if(result.status == 0){
+					var note = result.data;
+					var noteId = note.cn_note_id;
+					createNoteLi(noteTitle, noteId);
+					alert(result.msg);
+				}else{
+					$("#note_span").html("笔记添加失败");
+				}
+			},
+			error : function() {
+				alert("创建笔记异常");
+			}
+		});
+	}
+}
+
+//
+function alertNote(){
+	
 }

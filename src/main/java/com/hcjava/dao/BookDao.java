@@ -6,7 +6,7 @@ import com.hcjava.pojo.Book;
 
 public interface BookDao {
 
-	List<Book> findByUserId(String uid);
+	List<Book> findByUserId(String uid);//查询笔记本列表
 	
-	void save(Book book);
+	int save(Book book);
 }

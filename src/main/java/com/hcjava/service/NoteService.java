@@ -6,23 +6,30 @@ import com.hcjava.util.NoteResult;
 public interface NoteService {
 
 	/**
-	 * 获取笔记列表
+	 * 	获取笔记列表
 	 * @param bookId
 	 * @return
 	 */
 	NoteResult loadNotes(String bookId);
 	
 	/**
-	 * 获取笔记内容
+	 * 	获取笔记内容
 	 * @param noteId
 	 * @return
 	 */
 	NoteResult loadNote(String noteId);
 	
 	/**
-	 * 修改笔记内容
+	 * 	修改笔记内容
 	 * @param note
 	 * @return
 	 */
 	NoteResult update(Note note);
+	
+	/**
+	 * 	添加笔记
+	 * @param note
+	 * @return
+	 */
+	NoteResult save(Note note);
 }

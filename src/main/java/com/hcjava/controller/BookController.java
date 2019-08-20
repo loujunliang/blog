@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hcjava.pojo.Book;
 import com.hcjava.service.BookService;
 import com.hcjava.util.NoteResult;
 
@@ -20,6 +21,13 @@ public class BookController {
 	@ResponseBody
 	public NoteResult loadBooks(String uid) {
 		NoteResult result = bookService.loadUserBooks(uid);
+		return result;
+	}
+	
+	@RequestMapping("/add.do")
+	@ResponseBody
+	public NoteResult add(Book book) {
+		NoteResult result = bookService.save(book);
 		return result;
 	}
 }

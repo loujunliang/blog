@@ -310,6 +310,17 @@
 			$("#save_note").click(updateNote);
 			//关闭对话框
 			$("#can").on("click",".cancle,.close",closeAlertWindow);
+			//弹出创建笔记本对话框
+			$("#add_notebook").click(alertAddBookWindow);
+			//弹窗创建按钮绑定点击事件
+			$("#can").on("click","#sure_addbook",addBook);
+			//弹出创建笔记对话框
+			$("#add_note").click(alertAddNoteWindow);
+			//弹窗创建按钮绑定点击事件
+			$("#can").on("click","#sure_addnote",addNote);
+			//操作笔记
+			$("#note_ul").on("click","li .btn_move",alertNote);
+			
 		});
 		</script>
 		<!-- Bootstrap框架JS -->
