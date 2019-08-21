@@ -30,5 +30,12 @@ public class UserController {
 		NoteResult result = userService.save(user);
 		return result;
 	}
+	
+	@RequestMapping("/change.do")
+	@ResponseBody
+	public NoteResult change(String userId, String last_password, String new_password) {
+		NoteResult result = userService.updatePassword(userId, last_password, new_password);
+		return result;
+	}
 
 }

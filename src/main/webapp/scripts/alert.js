@@ -53,6 +53,34 @@ function alertAddBookWindow(){
 		"alert/alert_notebook.html");
 	$(".opacity_bg").show();
 };
+
+//弹出恢复笔记本对话框
+function alertReplayNoteWindow(){
+	/*$("#rollBackNote_ul a").removeClass("checked");
+	$(this).parent().addClass("checked");*/
+	var noteId = $(this).parent().parent().data("noteId");
+	$(".opacity_bg").show();
+	$("#can").load("alert/alert_replay.html",function(){
+		//为alert_replay.html中<select>加载数据
+		var books = $("#book_ul li");//获取book列表
+		//循环book列表数据
+		for(var i=0;i<books.length;i++){
+			var $li = $(books[i]);//获取li元素并转为jQuery对象
+			var bookId = $li.data("bookId");//获取笔记本id
+			var bookName = $li.text().trim();//获取笔记本名
+			//创建一个option元素
+			var sopt = '';
+			sopt+='<option value="'+bookId+'">';
+			sopt+= bookName;
+			sopt+='</option>';
+			$sopt = $(sopt);
+			//添加到select中
+			$("#replaySelect").append($sopt);
+		}
+		$("#replaySelect").data("noteId",noteId);
+	});
+};
+
 //关闭对话框
 function closeAlertWindow(){
 	//关闭操作

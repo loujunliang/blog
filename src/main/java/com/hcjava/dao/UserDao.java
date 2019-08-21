@@ -11,4 +11,8 @@ public interface UserDao {
 	User findByName(String name);//µÇÂ¼¼ì²é
 	
 	void save(User user);//×¢²á
+	
+	User findById(String userId);//²éÑ¯¾ÉÃÜÂë
+	
+	int update(User user);//ĞŞ¸ÄÃÜÂë
 }

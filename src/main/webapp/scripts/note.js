@@ -1,4 +1,4 @@
-//加载用户笔记本中的笔记列表
+	//加载用户笔记本中的笔记列表
 function loadNotes() {
 	// 获取笔记本id
 	var bookId = $(this).data("bookId");
@@ -136,9 +136,11 @@ function addNote() {
 	var bookId = $li.data("bookId");
 	var userId = getCookie("uid");
 	// 检测参数格式
-	if (noteTitle == "") {
+	if (userId == null) {
+		window.location.href = "log_in.html";
+	}else if(noteTitle == ""){
 		$("#note_span").html("笔记标题不能为空");
-	} else {
+	}else {
 		// 发送Ajax
 		$.ajax({
 			url : base_path + "/note/add.do",
@@ -146,7 +148,7 @@ function addNote() {
 			data : {
 				"cn_notebook_id" : bookId,
 				"cn_note_title" : noteTitle,
-				"cn_user_id":userId
+				"cn_user_id" : userId
 			},
 			dataType : "json",
 			success : function(result) {
@@ -166,7 +168,161 @@ function addNote() {
 	}
 }
 
-//
+//操作笔记弹窗
 function alertNote(){
-	
+	//隐藏笔记菜单
+	$("#note_ul div").hide();
+	//显示笔记菜单
+	$(this).parent().next().slideDown(100);
+	//先清除note选中状态
+	$("#note_ul a").removeClass("checked");
+	//设置选中状态
+	$(this).parent().addClass("checked");
+	return false;
+}
+//隐藏笔记菜单
+function hideNoteMenu(){
+	//隐藏笔记菜单
+	$("#note_ul div").hide();
+}
+
+//移动笔记
+function moveNote(){
+	//获取参数
+	var bookId = $("#moveSelect").val();
+	var $li = $("#note_ul a.checked").parent();
+	var noteId = $li.data("noteId");
+	//检测参数格式
+	if(bookId == "none"){
+		$("#moveSelect_span").html("请选择笔记本");
+	}else{
+		//发送Ajax
+		$.ajax({
+			url:base_path+"/note/move.do",
+			type:"post",
+			data:{
+				"cn_notebook_id":bookId,
+				"cn_note_id":noteId
+			},
+			dataType:"json",
+			success:function(result){
+				if(result.status == 0){
+					$("#note_ul a.checked").parent().remove();
+					alert(result.msg);
+				}else{
+					alert(result.msg);
+				}
+			},
+			error:function(){
+				alert("移动笔记异常");
+			}
+		});
+	}
+}
+
+//删除笔记(放至回收站)
+function deleteNote(){
+	//获取参数
+	var noteId = $("#note_ul a.checked").parent().data("noteId");
+	//检测参数格式
+	//发送Ajax
+	$.ajax({
+		url:base_path+"/note/delete.do",
+		type:"post",
+		data:{
+			"noteId":noteId
+		},
+		dataType:"json",
+		success:function(result){
+			if(result.status == 0){
+				$("#note_ul a.checked").parent().remove();
+				alert(result.msg);
+			}else if(result.status == 1){
+				alert(result.msg);
+			}
+		},
+		error:function(){
+			alert("删除笔记异常");
+		}
+	});
+}
+
+//打开回收站
+function rollBack(){
+	$("#pc_part_4")[0].style.display='block';
+	$("#rollBackNote_ul").empty();
+	var userId = getCookie("uid");
+	//获取参数
+	//检测参数格式
+	//发送Ajax
+	$.ajax({
+		url:base_path+"/note/rollback.do",
+		type:"post",
+		data:{"userId":userId},
+		dataType:"json",
+		success:function(result){
+			if(result.status == 0){
+				var notes = result.data;
+				for (var i = 0; i < notes.length; i++) {
+					var noteTitle = notes[i].cn_note_title;
+					var noteId = notes[i].cn_note_id;
+					createRollBackNote(noteTitle,noteId);
+				}
+			}else if(result.status == 1){
+				window.location.href = "edit.html";
+				alert("数据获取失败");
+			}
+		},
+		error:function(){
+			alert("回收站数据获取异常");
+		}
+	});
+}
+//创建回收站笔记列表
+function createRollBackNote(noteTitle,noteId){
+	var sli = "";
+	sli += '<li class="disable"><a><i class="fa fa-file-text-o" title="online" rel="tooltip-bottom"></i>'+noteTitle+'<button type="button" class="btn btn-default btn-xs btn_position btn_delete"><i class="fa fa-times"></i></button><button type="button" class="btn btn-default btn-xs btn_position_2 btn_replay"><i class="fa fa-reply"></i></button></a></li>';
+	var $li = $(sli);
+	$li.data("noteId",noteId);
+	$("#rollBackNote_ul").append($li);
+}
+
+//恢复回收站笔记
+function replayNote(){
+	//获取参数
+	var noteId = $("#replaySelect").data("noteId");
+	//var noteId = $("#rollBackNote_ul a.checked").parent().data("noteId");
+	var bookId = $("#replaySelect").val();
+	alert(noteId);
+	//检测参数格式
+	if(bookId == null){
+		$("#replaySelect_span").html("请选择笔记本");
+	}else{
+		//发送Ajax
+		$.ajax({
+			url:base_path+"/note/replay.do",
+			type:"post",
+			data:{
+				"noteId":noteId,
+				"bookId":bookId
+			},
+			dataType:"json",
+			success:function(result){
+				if(result.status == 0){
+					var roll=$("#rollBackNote_ul li");
+					for (var i = 0; i < roll.length; i++) {
+						var id=$(roll[i]).data("noteId");
+						if (noteId==id) {
+							$(roll[i]).remove();
+							break;
+						}
+					}
+					alert(result.msg);
+				}
+			},
+			error:function(){
+				alert("恢复笔记异常");
+			}
+		});
+	}
 }

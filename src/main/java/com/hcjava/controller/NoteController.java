@@ -44,4 +44,32 @@ public class NoteController {
 		NoteResult result = noteService.save(note);
 		return result;
 	}
+	
+	@RequestMapping("/move.do")
+	@ResponseBody
+	public NoteResult updateMove(Note note) {
+		NoteResult result = noteService.updateMove(note);
+		return result;
+	}
+	
+	@RequestMapping("/delete.do")
+	@ResponseBody
+	public NoteResult delete(String noteId) {
+		NoteResult result = noteService.delete(noteId);
+		return result;
+	}
+	
+	@RequestMapping("/rollback.do")
+	@ResponseBody
+	public NoteResult rollBackNote(String userId) {
+		NoteResult result = noteService.findByStatusId(userId);
+		return result;
+	}
+	
+	@RequestMapping("/replay.do")
+	@ResponseBody
+	public NoteResult replay(String noteId, String bookId) {
+		NoteResult result = noteService.replay(noteId,bookId);
+		return result;
+	}
 }

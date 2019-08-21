@@ -98,7 +98,7 @@
 							<div class="contact-body">
 								<ul id="note_ul" class="contacts-list">
 									<!-- 动态生成笔记li元素 -->
-									<!-- 	<li class="online">
+									<!--<li class="online">
 										<a  class='checked'>
 											<i class="fa fa-file-text-o" title="online" rel="tooltip-bottom"></i> 使用Java操作符<button type="button" class="btn btn-default btn-xs btn_position btn_slide_down"><i class="fa fa-chevron-down"></i></button>
 										</a>
@@ -126,8 +126,8 @@
 					<div class="module" data-toggle="niceScroll">
 						<div class="chat-contact">
 							<div class="contact-body">
-								<ul class="contacts-list">
-									<li class="disable"><a ><i class="fa fa-file-text-o" title="online" rel="tooltip-bottom"></i> 虚假回收站笔记<button type="button" class="btn btn-default btn-xs btn_position btn_delete"><i class="fa fa-times"></i></button><button type="button" class="btn btn-default btn-xs btn_position_2 btn_replay"><i class="fa fa-reply"></i></button></a></li>
+								<ul id="rollBackNote_ul" class="contacts-list">
+									<!-- <li class="disable"><a ><i class="fa fa-file-text-o" title="online" rel="tooltip-bottom"></i> 虚假回收站笔记<button type="button" class="btn btn-default btn-xs btn_position btn_delete"><i class="fa fa-times"></i></button><button type="button" class="btn btn-default btn-xs btn_position_2 btn_replay"><i class="fa fa-reply"></i></button></a></li> -->
 								</ul>
 							</div>
 						</div>
@@ -296,13 +296,13 @@
 		<script type="text/javascript" src="scripts/book.js"></script>
 		<script type="text/javascript" src="scripts/note.js"></script>
 		<script type="text/javascript" src="scripts/alert.js"></script>
+		<script type="text/javascript" src="scripts/login.js"></script>
 		<script type="text/javascript">
 		//edit.html页面加载完毕执行的方法
 		$(function() {
 			//执行加载笔记本的方法
 			loadUserBooks();
 			//加载笔记的方法
-			//$("#book_ul li").click(loadNote);
 			$("#book_ul").on("click","li",loadNotes);
 			//加载笔记内容方法
 			$("#note_ul").on("click","li",loadNote);
@@ -318,8 +318,26 @@
 			$("#add_note").click(alertAddNoteWindow);
 			//弹窗创建按钮绑定点击事件
 			$("#can").on("click","#sure_addnote",addNote);
-			//操作笔记
-			$("#note_ul").on("click","li .btn_move",alertNote);
+			//操作笔记弹窗
+			$("#note_ul").on("click",".btn_slide_down",alertNote);
+			//点击页面，隐藏笔记菜单弹窗
+			$("body").click(hideNoteMenu);
+			//移动笔记弹窗
+			$("#note_ul").on("click",".btn_move",alertMoveNoteWindow);
+			//移动确认
+			$("#can").on("click","#sure_movenote",moveNote);
+			//删除(放至回收站)笔记弹窗
+			$("#note_ul").on("click",".btn_delete",alertDeleteNoteWindow);
+			//删除确认
+			$("#can").on("click","#sure_deletenote",deleteNote);
+			//退出登录
+			$("#logout").click(logout);
+			//打开回收站
+			$("#rollback_button").click(rollBack);
+			//恢复笔记弹窗
+			$("#rollBackNote_ul").on("click",".btn_replay",alertReplayNoteWindow);
+			//确认恢复笔记
+			$("#can").on("click","#sure_replayNote",replayNote);
 			
 		});
 		</script>
@@ -346,5 +364,5 @@
 			//实例化Ueditor编辑器
 			var um = UM.getEditor('myEditor');
 		</script>
-	</body>		
+	</body>
 </html>

@@ -58,7 +58,7 @@
 	</bean>
 
 	<!-- 配置事务组件 -->
-	<bean id="txManager"
+	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
@@ -68,15 +68,5 @@
 		transaction-manager="transactionManager" proxy-target-class="true" />
 
 </beans>
-
-
-
-
-
-
-
-
-
-
 
 

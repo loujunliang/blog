@@ -4,6 +4,10 @@ $(function() {
 	// 给登陆按钮绑定单击事件
 	$("#login").click(checkLogin);
 	$("#regist_button").click(registUser);
+	//修改密码
+	$("#changePassword").click(changepwd);
+	//关闭修改密码页面
+	$("#back").click(back);
 })
 // 登录处理
 function checkLogin() {
@@ -115,4 +119,78 @@ function registUser() {
 			}
 		});
 	}
+}
+
+//退出登录
+function logout(){
+	delCookie("uid");
+	delCookie("uname");
+	window.location.href = "log_in.html";
+}
+
+//修改密码
+function changepwd(){
+	//获取参数
+	var userId = getCookie("uid");
+	var last_password = $("#last_password").val().trim();
+	var new_password = $("#new_password").val().trim();
+	var final_password = $("#final_password").val().trim();
+	//检测参数格式
+	$("#warning_1").html("");
+	$("#warning_2").html("");
+	$("#warning_3").html("");
+	
+	var ok = true;
+	if(userId == null){
+		ok = false;
+		window.location.href = "log_in.html";
+	}
+	
+	if(last_password == ""){
+		ok = false;
+		$("#warning_1").html("密码不能为空");
+		$("#warning_1").css("display","block");
+	}
+	
+	if(new_password == ""){
+		ok = false;
+		$("#warning_2").html("新密码不能为空");
+		$("#warning_2").css("display","block");
+	}else if(new_password < 6){
+		ok = false;
+		$("#warning_2").html("新密码长度过短");
+		$("#warning_2").css("display","block");
+	}
+	if(new_password != final_password){
+		ok = false;
+		$("#warning_3").html("密码输入不一致");
+		$("#warning_3").css("display","block");
+	}
+	//发送Ajax
+	if(ok){
+		$.ajax({
+			url:base_path+"/user/change.do",
+			type:"post",
+			data:{
+				"userId":userId,
+				"last_password":last_password,
+				"new_password":new_password
+			},
+			dataType:"json",
+			success:function(result){
+				if(result.status == 0){
+					window.location.href = "log_in.html";
+				}else if(result.status == 1){
+					$("#warning_1").html("原始密码错误");
+				}
+			},
+			error:function(){
+				alert("修改密码异常");
+			}
+		});
+	}
+}
+//关闭修改密码页面
+function back(){
+	window.location.href = "edit.html";
 }

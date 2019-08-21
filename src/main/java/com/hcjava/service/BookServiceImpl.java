@@ -29,7 +29,7 @@ public class BookServiceImpl implements BookService {
 
 	public NoteResult save(Book book) {
 		NoteResult result = new NoteResult();
-		String uuid = NoteUtil.createUUID().replace("-", "");
+		String uuid = NoteUtil.createUUID();
 		book.setCn_notebook_id(uuid);
 		book.setCn_notebook_type_id("1");
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());

@@ -3,6 +3,7 @@ package com.hcjava.service;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hcjava.dao.UserDao;
 import com.hcjava.pojo.User;
@@ -71,6 +72,35 @@ public class UserServiceImpl implements UserService {
 			return result;
 		} catch (Exception e) {
 			throw new NoteException("注册异常", e);
+		}
+	}
+
+	@Transactional
+	public NoteResult updatePassword(String userId, String last_password, String new_password) {
+		NoteResult result = new NoteResult();
+		User user = userDao.findById(userId);
+		String string = null;
+		try {
+			string = NoteUtil.md5(last_password);
+			if(!string.equals(user.getCn_user_password())) {
+				result.setStatus(1);
+				result.setMsg("原始密码错误");
+				return result;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+			User user2 = new User();
+			user2.setCn_user_id(userId);
+			String md5 = NoteUtil.md5(new_password);
+			user2.setCn_user_password(md5);
+			userDao.update(user2);
+			result.setStatus(0);
+			result.setMsg("密码修改成功");
+			return result;
+		} catch (Exception e) {
+			throw new NoteException("密码加密异常", e);
 		}
 	}
 

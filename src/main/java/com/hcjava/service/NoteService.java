@@ -32,4 +32,32 @@ public interface NoteService {
 	 * @return
 	 */
 	NoteResult save(Note note);
+	
+	/**
+	 * 	移动笔记
+	 * @param note
+	 * @return
+	 */
+	NoteResult updateMove(Note note);
+	
+	/**
+	 * 	逻辑删除
+	 * @param noteId
+	 * @return
+	 */
+	NoteResult delete(String noteId);
+	
+	/**
+	 * 	查询回收站笔记
+	 * @param userId
+	 * @return
+	 */
+	NoteResult findByStatusId(String userId);
+	
+	/**
+	 * 	恢复笔记
+	 * @param noteId
+	 * @return
+	 */
+	NoteResult replay(String noteId, String bookId);
 }
